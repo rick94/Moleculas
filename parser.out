@@ -1,0 +1,140 @@
+Created by PLY version 3.8 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> S
+Rule 1     S -> A LCURL L RCURL
+Rule 2     A -> MODEL
+Rule 3     L -> B
+Rule 4     B -> ELEMENT
+Rule 5     B -> ELEMENT ELEMENT NUMBER
+Rule 6     B -> ELEMENT ELEMENT NUMBER BOND B
+
+Terminals, with rules where they appear
+
+BOND                 : 6
+ELEMENT              : 4 5 5 6 6
+LCURL                : 1
+MODEL                : 2
+NUMBER               : 5 6
+RCURL                : 1
+error                : 
+
+Nonterminals, with rules where they appear
+
+A                    : 1
+B                    : 3 6
+L                    : 1
+S                    : 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . S
+    (1) S -> . A LCURL L RCURL
+    (2) A -> . MODEL
+
+    MODEL           shift and go to state 3
+
+    A                              shift and go to state 1
+    S                              shift and go to state 2
+
+state 1
+
+    (1) S -> A . LCURL L RCURL
+
+    LCURL           shift and go to state 4
+
+
+state 2
+
+    (0) S' -> S .
+
+
+
+state 3
+
+    (2) A -> MODEL .
+
+    LCURL           reduce using rule 2 (A -> MODEL .)
+
+
+state 4
+
+    (1) S -> A LCURL . L RCURL
+    (3) L -> . B
+    (4) B -> . ELEMENT
+    (5) B -> . ELEMENT ELEMENT NUMBER
+    (6) B -> . ELEMENT ELEMENT NUMBER BOND B
+
+    ELEMENT         shift and go to state 6
+
+    B                              shift and go to state 5
+    L                              shift and go to state 7
+
+state 5
+
+    (3) L -> B .
+
+    RCURL           reduce using rule 3 (L -> B .)
+
+
+state 6
+
+    (4) B -> ELEMENT .
+    (5) B -> ELEMENT . ELEMENT NUMBER
+    (6) B -> ELEMENT . ELEMENT NUMBER BOND B
+
+    RCURL           reduce using rule 4 (B -> ELEMENT .)
+    ELEMENT         shift and go to state 8
+
+
+state 7
+
+    (1) S -> A LCURL L . RCURL
+
+    RCURL           shift and go to state 9
+
+
+state 8
+
+    (5) B -> ELEMENT ELEMENT . NUMBER
+    (6) B -> ELEMENT ELEMENT . NUMBER BOND B
+
+    NUMBER          shift and go to state 10
+
+
+state 9
+
+    (1) S -> A LCURL L RCURL .
+
+    $end            reduce using rule 1 (S -> A LCURL L RCURL .)
+
+
+state 10
+
+    (5) B -> ELEMENT ELEMENT NUMBER .
+    (6) B -> ELEMENT ELEMENT NUMBER . BOND B
+
+    RCURL           reduce using rule 5 (B -> ELEMENT ELEMENT NUMBER .)
+    BOND            shift and go to state 11
+
+
+state 11
+
+    (6) B -> ELEMENT ELEMENT NUMBER BOND . B
+    (4) B -> . ELEMENT
+    (5) B -> . ELEMENT ELEMENT NUMBER
+    (6) B -> . ELEMENT ELEMENT NUMBER BOND B
+
+    ELEMENT         shift and go to state 6
+
+    B                              shift and go to state 12
+
+state 12
+
+    (6) B -> ELEMENT ELEMENT NUMBER BOND B .
+
+    RCURL           reduce using rule 6 (B -> ELEMENT ELEMENT NUMBER BOND B .)
+
